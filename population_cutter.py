@@ -57,13 +57,13 @@ if __name__ == '__main__':
             sys.exit()
 
         try:
-            print("Unarchive population data... It may take some time")
+            print("Unzipping population data... It may take some time")
             if unpack_file(local_filename, gpkg_file):
                 print("Population file data loaded successfully")
             else:
                 raise Exception()
         except Exception as e:
-            print('Error occurred while unpacking population', e)
+            print('Error occurred while unzipping population', e)
             sys.exit()
 
     # cut population
