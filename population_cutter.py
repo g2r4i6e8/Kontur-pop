@@ -42,30 +42,30 @@ if __name__ == '__main__':
     # define data file)
     gpkg_file = os.path.join('resources', 'kontur_population.gpkg')
     if not os.path.exists(gpkg_file):
-        print("ERROR! File with population is absent")
-        answer = input("Do you want to download it? y/n\n")
-        if answer.lower() == 'y' or answer.lower() == 'yes':
-            try:
-                population_file = 'kontur_population_20220630.gpkg.gz'
-                if not os.path.exists(os.path.join('resources', population_file)):
-                    os.makedirs('resources', exist_ok=True)
-                    print("Downloading population data... It may take some time")
-                    local_filename = download_population(population_file)
-            except Exception as e:
-                print('Error occurred while downloading population', e)
-                sys.exit()
+        print("WARNING! File with population is absent")
+        print("It will be downloaded shortly")
+        print("You will need ~9GB of memory")
 
-            try:
-                print("Unarchive population data... It may take some time")
-                if unpack_file(local_filename, gpkg_file):
-                    print("Population file data loaded successfully")
-                else:
-                    raise Exception()
-            except Exception as e:
-                print('Error occurred while unpacking population', e)
-                sys.exit()
-        else:
+        try:
+            population_file = 'kontur_population_20220630.gpkg.gz'
+            if not os.path.exists(os.path.join('resources', population_file)):
+                os.makedirs('resources', exist_ok=True)
+                print("Downloading population data... It may take some time")
+                local_filename = download_population(population_file)
+        except Exception as e:
+            print('Error occurred while downloading population', e)
             sys.exit()
+
+        try:
+            print("Unarchive population data... It may take some time")
+            if unpack_file(local_filename, gpkg_file):
+                print("Population file data loaded successfully")
+            else:
+                raise Exception()
+        except Exception as e:
+            print('Error occurred while unpacking population', e)
+            sys.exit()
+
     # cut population
     try:
         print("Cutting population inside defined area... It may take some time")
