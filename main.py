@@ -7,8 +7,8 @@ from tools import check_requirements, download_population, unpack_file
 if __name__ == '__main__':
     if len(sys.argv) < 5:
         print("Use: python population_cutter.py top left bottom right")
-        # sample
-        # 7048591.26497715 9306376.98870119 7040405.72953559 9327904.30238216
+        print("Coordinates should be in WGS84")
+        # Novi Sad
         # 45.27334396 19.79934486 45.24239696 19.85313726
         sys.exit()
 
