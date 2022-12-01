@@ -33,3 +33,4 @@ def cut_area(gpkg_file, output_file, top, left, bottom, right):
 
     population = gdf['population'].sum()
     print('Total population inside area: {}'.format(population))
+    print('Output file location: {}'.format(output_file))
