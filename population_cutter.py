@@ -6,8 +6,10 @@ from tools import check_requirements, download_population, unpack_file
 
 if __name__ == '__main__':
     if len(sys.argv) < 5:
-        print("Use: python population_cutter.py top left bottom right")
+        print("Use: python population_cutter.py top left bottom right output_filename")
         print("Coordinates should be in WGS84")
+        print("Output filename should have *.geojson format")
+        print("Example: python population_cutter.py 45.27334396 19.79934486 45.24239696 19.85313726 NoviSad.geojson")
         # Novi Sad
         # 45.27334396 19.79934486 45.24239696 19.85313726
         sys.exit()
@@ -18,6 +20,7 @@ if __name__ == '__main__':
         left = float(sys.argv[2])
         bottom = float(sys.argv[3])
         right = float(sys.argv[4])
+        output_filename = sys.argv[5]
     except:
         print("FATAL ERROR! Coordinates should be float")
         sys.exit()
@@ -37,9 +40,19 @@ if __name__ == '__main__':
     os.makedirs('output', exist_ok=True)
 
     # initialize output_file
-    output_file = os.path.join('output', 'population.geojson')
+    if output_filename.split('.')[-1] == 'geojson':
+        output_file = os.path.join('output', output_filename)
+    elif ('geojson' not in output_filename) or (output_filename.split('.')[-1] != 'geojson'):
+        print("WARNING! Output filename does not belong to geojson format. Geojson extension will be added")
+        output_filename = '{}.geojson'.format(output_filename)
+        output_file = os.path.join('output', output_filename)
+    else:
+        print("FATAL ERROR! Impossible to define output filename")
+        sys.exit()
 
-    # define data file)
+    print("Output file will be stored here: {}".format(output_file))
+
+    # define data file
     gpkg_file = os.path.join('resources', 'kontur_population.gpkg')
     if not os.path.exists(gpkg_file):
         print("WARNING! File with population is absent")
